@@ -4,6 +4,8 @@ import sys
 
 from flask import Flask, render_template
 
+from src.modulos import bootstrap
+
 
 def create_app(config_filename: str = 'config.dev.json') -> Flask:
     app = Flask(__name__,
@@ -21,13 +23,12 @@ def create_app(config_filename: str = 'config.dev.json') -> Flask:
         app.logger.critical("Não existe o arquivo de configuração informado")
         sys.exit(1)
 
-
+    bootstrap.init_app(app)
     @app.route('/')
     @app.route('/index')
     def index():
         return render_template('index.jinja',
                                title="Página principal")
-
 
     return app
 
